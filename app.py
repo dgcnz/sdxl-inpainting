@@ -34,7 +34,8 @@ def read_content(file_path: str) -> str:
 def predict(dict, prompt=""):
     init_image = dict["image"].convert("RGB").resize((512, 512))
     mask = dict["mask"].convert("RGB").resize((512, 512))
-    output = pipe(prompt = prompt, image=init_image, mask_image=mask,guidance_scale=7.5)
+    output = pipe(prompt = prompt, image=init_image, mask_image=mask,num_inference_steps=50, strength=0.80)
+                  # guidance_scale=7.5
     return output.images[0], gr.update(visible=True), gr.update(visible=True), gr.update(visible=True)
 
 
