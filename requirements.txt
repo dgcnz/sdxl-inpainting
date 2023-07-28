@@ -5,6 +5,7 @@ git+https://github.com/huggingface/diffusers.git
 transformers
 ftfy
 numpy
+invisible-watermark>=0.2.0
 matplotlib
 uuid
 gradio
