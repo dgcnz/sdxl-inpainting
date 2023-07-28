@@ -36,7 +36,8 @@ def predict(dict, prompt="", num_inference_steps: int = 50, strength: float = 0.
     mask = dict["mask"].convert("RGB").resize((512, 512))
     output = pipe(prompt = prompt, image=init_image, mask_image=mask,num_inference_steps=num_inference_steps, strength=strength)
                   # guidance_scale=7.5
-    return output.images[0], gr.update(visible=True), gr.update(visible=True), gr.update(visible=True)
+    # return output.images[0], gr.update(visible=True), gr.update(visible=True), gr.update(visible=True)
+    return output.images[0]
 
 
 css = '''
