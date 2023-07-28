@@ -91,9 +91,9 @@ with image_blocks as demo:
                         prompt = gr.Textbox(placeholder = 'Your prompt (what you want in place of what is erased)', show_label=False, elem_id="input-text")
 
                     with gr.Row(elem_id="prompt-container").style(mobile_collapse=False, equal_height=True):
-                        num_inference_steps = gr.Slider(minimum=10, maximum=300, value=50)
+                        num_inference_steps = gr.Slider(minimum=10, maximum=300, value=50, label="Num Inference Steps")
                     with gr.Row(elem_id="prompt-container").style(mobile_collapse=False, equal_height=True):
-                        strength = gr.Slider(minimum=0.0, maximum=1.0, value=0.80)
+                        strength = gr.Slider(minimum=0.0, maximum=1.0, value=0.80, label="Strength")
                     with gr.Row(elem_id="prompt-container").style(mobile_collapse=False, equal_height=True):
                         btn = gr.Button("Inpaint!").style(
                             margin=False,

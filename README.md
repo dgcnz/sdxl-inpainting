@@ -1,5 +1,5 @@
 ---
-title: Runway Inpainting
+title: SDXL1.0 Inpainting Demo
 emoji: 🔥
 colorFrom: green
 colorTo: pink
