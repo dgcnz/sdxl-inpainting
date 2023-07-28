@@ -31,10 +31,10 @@ def read_content(file_path: str) -> str:
 
     return content
 
-def predict(dict, prompt=""):
+def predict(dict, prompt="", num_inference_steps: int = 50, strength: float = 0.80):
     init_image = dict["image"].convert("RGB").resize((512, 512))
     mask = dict["mask"].convert("RGB").resize((512, 512))
-    output = pipe(prompt = prompt, image=init_image, mask_image=mask,num_inference_steps=50, strength=0.80)
+    output = pipe(prompt = prompt, image=init_image, mask_image=mask,num_inference_steps=num_inference_steps, strength=strength)
                   # guidance_scale=7.5
     return output.images[0], gr.update(visible=True), gr.update(visible=True), gr.update(visible=True)
 
@@ -88,21 +88,28 @@ with image_blocks as demo:
                     image = gr.Image(source='upload', tool='sketch', elem_id="image_upload", type="pil", label="Upload").style(height=400)
                     with gr.Row(elem_id="prompt-container").style(mobile_collapse=False, equal_height=True):
                         prompt = gr.Textbox(placeholder = 'Your prompt (what you want in place of what is erased)', show_label=False, elem_id="input-text")
+
+                    with gr.Row(elem_id="prompt-container").style(mobile_collapse=False, equal_height=True):
+                        num_inference_steps = gr.Slider(minimum=10, maximum=300, value=50)
+                    with gr.Row(elem_id="prompt-container").style(mobile_collapse=False, equal_height=True):
+                        strength = gr.Slider(minimum=0.0, maximum=1.0, value=0.80)
+                    with gr.Row(elem_id="prompt-container").style(mobile_collapse=False, equal_height=True):
                         btn = gr.Button("Inpaint!").style(
                             margin=False,
                             rounded=(False, True, True, False),
                             full_width=False,
                         )
+
                 with gr.Column():
                     image_out = gr.Image(label="Output", elem_id="output-img").style(height=400)
-                    with gr.Group(elem_id="share-btn-container"):
-                        community_icon = gr.HTML(community_icon_html, visible=False)
-                        loading_icon = gr.HTML(loading_icon_html, visible=False)
-                        share_button = gr.Button("Share to community", elem_id="share-btn", visible=False)
+                    # with gr.Group(elem_id="share-btn-container"):
+                    #     community_icon = gr.HTML(community_icon_html, visible=False)
+                    #     loading_icon = gr.HTML(loading_icon_html, visible=False)
+                    #     # share_button = gr.Button("Share to community", elem_id="share-btn", visible=False)
             
 
-            btn.click(fn=predict, inputs=[image, prompt], outputs=[image_out, community_icon, loading_icon, share_button])
-            share_button.click(None, [], [], _js=share_js)
+            btn.click(fn=predict, inputs=[image, prompt, num_inference_steps, strength], outputs=[image_out])
+            # share_button.click(None, [], [], _js=share_js)
 
 
 
