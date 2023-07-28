@@ -5,6 +5,8 @@ git+https://github.com/huggingface/diffusers.git
 transformers
 ftfy
 numpy
+accelerate
+safetensors
 invisible-watermark>=0.2.0
 matplotlib
 uuid
